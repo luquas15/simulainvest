@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { compareAllInvestments } from '../utils/investments';
 import { formatCurrency } from '../utils/finance';
 import { useMarketData } from '../context/MarketDataContext';
+import { fetchAssetPrices } from '../utils/assetApi';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, Cell,
@@ -38,11 +39,26 @@ const RISK_BADGE = {
   'Muito Alto': 'bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300',
 };
 
+function ChangeBadge({ value }) {
+  if (value == null) return null;
+  const pos = value >= 0;
+  return (
+    <span className={`ml-1 rounded-full px-1.5 py-0.5 text-xs font-semibold ${
+      pos ? 'bg-green-50 text-green-600 dark:bg-green-900/30 dark:text-green-400'
+          : 'bg-red-50 text-red-500 dark:bg-red-900/30 dark:text-red-400'
+    }`}>
+      {pos ? '+' : ''}{value.toFixed(2)}%
+    </span>
+  );
+}
+
 export default function ComparadorInvestimentos() {
   const { rates, isLive } = useMarketData();
   const [principal, setPrincipal] = useState(10000);
   const [months,    setMonths]    = useState(12);
   const [cdiRate,   setCdiRate]   = useState(14.75);
+  const [assets,    setAssets]    = useState(null);
+  const [assetsLoading, setAssetsLoading] = useState(true);
 
   // Sincroniza CDI com dados ao vivo do BCB
   useEffect(() => {
@@ -50,6 +66,14 @@ export default function ComparadorInvestimentos() {
       setCdiRate(parseFloat(rates.cdi.toFixed(2)));
     }
   }, [rates.cdi, rates.source]);
+
+  // Busca preços ao vivo de cripto e câmbio (CoinGecko + Frankfurter)
+  useEffect(() => {
+    fetchAssetPrices()
+      .then(setAssets)
+      .catch(() => {})
+      .finally(() => setAssetsLoading(false));
+  }, []);
 
   const results = useMemo(
     () => compareAllInvestments({ principal, months, cdiRate }),
@@ -107,6 +131,60 @@ export default function ComparadorInvestimentos() {
           <Slider label="" id="cdi" min={5} max={20} step={0.25} value={cdiRate} onChange={setCdiRate} format={v => `${v}% a.a.`} />
         </div>
       </div>
+
+      {/* Ticker de preços ao vivo */}
+      {(assets?.source === 'live' || assetsLoading) && (
+        <div className="mb-8 flex flex-wrap gap-3">
+          {assetsLoading ? (
+            <div className="flex items-center gap-2 rounded-xl border border-gray-100 bg-white px-4 py-2 text-xs text-gray-400 dark:border-gray-800 dark:bg-gray-900">
+              <span className="h-3 w-3 animate-spin rounded-full border-2 border-gray-300 border-t-brand" />
+              Buscando preços ao vivo…
+            </div>
+          ) : (
+            <>
+              {assets?.btcBrl && (
+                <div className="flex items-center gap-2 rounded-xl border border-orange-100 bg-orange-50 px-4 py-2 dark:border-orange-900/30 dark:bg-orange-900/10">
+                  <span className="text-base">₿</span>
+                  <div>
+                    <p className="text-xs font-medium text-orange-700 dark:text-orange-400">Bitcoin</p>
+                    <p className="text-sm font-bold text-orange-900 dark:text-orange-300">
+                      {formatCurrency(assets.btcBrl)}
+                      <ChangeBadge value={assets.btcChange24h} />
+                    </p>
+                  </div>
+                </div>
+              )}
+              {assets?.ethBrl && (
+                <div className="flex items-center gap-2 rounded-xl border border-purple-100 bg-purple-50 px-4 py-2 dark:border-purple-900/30 dark:bg-purple-900/10">
+                  <span className="text-base">Ξ</span>
+                  <div>
+                    <p className="text-xs font-medium text-purple-700 dark:text-purple-400">Ethereum</p>
+                    <p className="text-sm font-bold text-purple-900 dark:text-purple-300">
+                      {formatCurrency(assets.ethBrl)}
+                      <ChangeBadge value={assets.ethChange24h} />
+                    </p>
+                  </div>
+                </div>
+              )}
+              {assets?.usdBrl && (
+                <div className="flex items-center gap-2 rounded-xl border border-green-100 bg-green-50 px-4 py-2 dark:border-green-900/30 dark:bg-green-900/10">
+                  <span className="text-base font-bold text-green-700">$</span>
+                  <div>
+                    <p className="text-xs font-medium text-green-700 dark:text-green-400">Dólar (USD/BRL)</p>
+                    <p className="text-sm font-bold text-green-900 dark:text-green-300">
+                      R$ {assets.usdBrl.toFixed(2)}
+                    </p>
+                  </div>
+                </div>
+              )}
+              <div className="flex items-center self-center rounded-full bg-gray-100 px-2.5 py-1 text-xs text-gray-400 dark:bg-gray-800">
+                <span className="mr-1 h-1.5 w-1.5 rounded-full bg-green-500 inline-block" />
+                ao vivo · CoinGecko / Frankfurter · atualiza em 15 min
+              </div>
+            </>
+          )}
+        </div>
+      )}
 
       {/* Gráfico de barras */}
       <div className="mb-8 rounded-2xl border border-gray-100 bg-white p-6 shadow-card dark:border-gray-800 dark:bg-gray-900">
@@ -166,7 +244,22 @@ export default function ComparadorInvestimentos() {
                         <span className="h-2.5 w-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: r.color }} />
                         <div>
                           <p className="font-medium text-gray-900 dark:text-white">{r.name}</p>
-                          <p className="text-xs text-gray-400 max-w-[180px] truncate">{r.description}</p>
+                          <p className="text-xs text-gray-400 max-w-[200px] truncate">{r.description}</p>
+                          {r.id === 'btc' && assets?.btcBrl && (
+                            <p className="text-xs text-orange-500 font-medium">
+                              {formatCurrency(assets.btcBrl)} <ChangeBadge value={assets.btcChange24h} />
+                            </p>
+                          )}
+                          {r.id === 'eth' && assets?.ethBrl && (
+                            <p className="text-xs text-purple-500 font-medium">
+                              {formatCurrency(assets.ethBrl)} <ChangeBadge value={assets.ethChange24h} />
+                            </p>
+                          )}
+                          {r.id === 'dolar' && assets?.usdBrl && (
+                            <p className="text-xs text-green-600 font-medium">
+                              R$ {assets.usdBrl.toFixed(2)} / USD ao vivo
+                            </p>
+                          )}
                         </div>
                       </div>
                     </td>
