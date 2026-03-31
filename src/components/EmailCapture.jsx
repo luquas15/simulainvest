@@ -32,8 +32,6 @@ export default function EmailCapture() {
       return;
     }
 
-    // Aqui integraria com Mailchimp/ConvertKit/EmailJS
-    // Por ora, salva localmente como demo
     try {
       const leads = JSON.parse(localStorage.getItem('simulainvest-leads') || '[]');
       leads.push({ email, date: new Date().toISOString(), simulation: summary });
