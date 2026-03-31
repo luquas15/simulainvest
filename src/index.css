@@ -1,0 +1,129 @@
+/* Tailwind CSS directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Global resets & base styles ─────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.6;
+  }
+}
+
+/* ── Custom range input (cross-browser) ─────────────────────────────────── */
+@layer components {
+  input[type='range'] {
+    @apply w-full cursor-pointer appearance-none;
+    height: 6px;
+    border-radius: 999px;
+    background: transparent;
+    outline: none;
+  }
+
+  input[type='range']::-webkit-slider-thumb {
+    @apply appearance-none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #00D46A;
+    border: 2px solid white;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  input[type='range']::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 0 4px rgba(0, 212, 106, 0.2);
+  }
+
+  input[type='range']::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #00D46A;
+    border: 2px solid white;
+    cursor: pointer;
+  }
+
+  input[type='range']::-webkit-slider-runnable-track {
+    height: 6px;
+    border-radius: 999px;
+    background: linear-gradient(to right,
+      #00D46A var(--range-progress, 0%),
+      #e5e7eb var(--range-progress, 0%)
+    );
+  }
+
+  .dark input[type='range']::-webkit-slider-runnable-track {
+    background: linear-gradient(to right,
+      #00D46A var(--range-progress, 0%),
+      #374151 var(--range-progress, 0%)
+    );
+  }
+}
+
+/* ── Utility classes ─────────────────────────────────────────────────────── */
+@layer utilities {
+  .shadow-glow {
+    box-shadow: 0 0 30px rgba(0, 212, 106, 0.25);
+  }
+
+  .shadow-card {
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  }
+
+  /* Scrollbar estilizado */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #00D46A;
+    border-radius: 999px;
+  }
+}
+
+/* ── Prose overrides ─────────────────────────────────────────────────────── */
+.prose p {
+  line-height: 1.75;
+}
+.prose strong {
+  font-weight: 600;
+  color: inherit;
+}
+
+/* ── Details/summary arrow override ─────────────────────────────────────── */
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+details[open] > summary::after {
+  content: ' ▲';
+  font-size: 0.65rem;
+  color: #00D46A;
+}
+details > summary::after {
+  content: ' ▼';
+  font-size: 0.65rem;
+  color: #9CA3AF;
+}
