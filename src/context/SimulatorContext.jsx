@@ -135,6 +135,10 @@ export function SimulatorProvider({ children }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [summary?.finalBalance, params.initialValue, params.annualRate, params.periods]);
 
+  function copyShareUrl() {
+    return navigator.clipboard.writeText(window.location.href);
+  }
+
   return (
     <SimulatorContext.Provider value={{
       params,
