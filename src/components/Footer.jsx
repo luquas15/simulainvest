@@ -78,9 +78,11 @@ export default function Footer() {
             <p className="text-xs text-gray-400">
               © {new Date().getFullYear()} SimulaInvest. Fins educacionais — não constitui recomendação de investimento.
             </p>
-            <p className="text-xs text-gray-400">
-              Feito com ❤️ no Brasil
-            </p>
+            <div className="flex items-center gap-4">
+              <Link to="/privacidade" className="text-xs text-gray-400 hover:text-brand transition-colors">Privacidade</Link>
+              <Link to="/termos"      className="text-xs text-gray-400 hover:text-brand transition-colors">Termos de Uso</Link>
+              <p className="text-xs text-gray-400">Feito com ❤️ no Brasil</p>
+            </div>
           </div>
         </div>
       </div>

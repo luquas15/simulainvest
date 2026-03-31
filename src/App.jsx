@@ -17,6 +17,8 @@ const ComparadorInvestimentos = lazy(() => import('./pages/ComparadorInvestiment
 const SimuladorAposentadoria  = lazy(() => import('./pages/SimuladorAposentadoria'));
 const CalculadoraFinanciamento= lazy(() => import('./pages/CalculadoraFinanciamento'));
 const Blog                    = lazy(() => import('./pages/Blog'));
+const Privacidade             = lazy(() => import('./pages/Privacidade'));
+const Termos                  = lazy(() => import('./pages/Termos'));
 
 function PageLoader() {
   return (
@@ -52,6 +54,8 @@ export default function App() {
                     <Route path="/simulador-aposentadoria"      element={<SimuladorAposentadoria />} />
                     <Route path="/calculadora-financiamento"    element={<CalculadoraFinanciamento />} />
                     <Route path="/blog"                         element={<Blog />} />
+                    <Route path="/privacidade"                  element={<Privacidade />} />
+                    <Route path="/termos"                       element={<Termos />} />
                   </Routes>
                 </Suspense>
               </div>
