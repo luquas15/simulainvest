@@ -1,7 +1,7 @@
 const LAST_UPDATED = '31 de março de 2026';
 const SITE = 'SimulaInvest';
-const DOMAIN = 'simulainvest.com.br';
-const EMAIL = 'contato@simulainvest.com.br';
+const DOMAIN = 'simulainvest.dev.br';
+const EMAIL = 'contato@simulainvest.dev.br';
 
 function Section({ title, children }) {
   return (

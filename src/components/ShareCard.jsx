@@ -75,7 +75,7 @@ function CardPreview({ summary, params }) {
 
       {/* Footer */}
       <p style={{ color: 'rgba(255,255,255,0.25)', fontSize: 10, textAlign: 'right' }}>
-        simulainvest.com.br
+        simulainvest.dev.br
       </p>
     </div>
   );
