@@ -35,6 +35,7 @@ const RISK_BADGE = {
   'Baixo':      'bg-green-50 text-green-600 dark:bg-green-900/30 dark:text-green-400',
   'Moderado':   'bg-yellow-50 text-yellow-600 dark:bg-yellow-900/30 dark:text-yellow-400',
   'Alto':       'bg-red-50 text-red-600 dark:bg-red-900/30 dark:text-red-400',
+  'Muito Alto': 'bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300',
 };
 
 export default function ComparadorInvestimentos() {
@@ -71,8 +72,8 @@ export default function ComparadorInvestimentos() {
           Comparador de Investimentos
         </h1>
         <p className="mx-auto max-w-2xl text-gray-500 dark:text-gray-400">
-          Poupança, CDB, LCI, Tesouro Direto, FIIs e Ações — veja quanto rende cada um
-          com desconto de IR e taxa de administração, no mesmo prazo.
+          Poupança, CDB, LCI, Tesouro Direto, FIIs, Ações, S&P 500, Ouro, Dólar, Bitcoin e Ethereum —
+          veja quanto rende cada um com desconto de IR, no mesmo prazo.
         </p>
       </div>
 
@@ -195,7 +196,7 @@ export default function ComparadorInvestimentos() {
 
         <div className="border-t border-gray-100 px-6 py-3 dark:border-gray-700">
           <p className="text-xs text-gray-400">
-            * Simulação com fins educacionais. IR calculado pela tabela regressiva. Taxas de renda variável são médias históricas, sem garantia de retorno futuro.
+            * Simulação com fins educacionais. IR calculado pela tabela regressiva (renda fixa) ou 15% flat (cripto, ouro, câmbio). Taxas de renda variável e cripto são médias históricas — volatilidade passada não garante retorno futuro.
           </p>
         </div>
       </div>

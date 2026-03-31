@@ -17,14 +17,15 @@ export function getIRRate(days) {
 }
 
 /**
- * Calcula o rendimento líquido de um investimento de renda fixa.
+ * Calcula o rendimento líquido de um investimento.
  * @param {number} principal     - Capital inicial
  * @param {number} annualRate    - Taxa bruta anual em %
  * @param {number} months        - Prazo em meses
  * @param {boolean} taxFree      - Se isento de IR (LCI, LCA, Poupança)
  * @param {number} adminFee      - Taxa de administração anual em % (fundos)
+ * @param {boolean} irFlat       - Se usa IR flat 15% (cripto, ouro, câmbio)
  */
-export function calcFixedIncome({ principal, annualRate, months, taxFree = false, adminFee = 0 }) {
+export function calcFixedIncome({ principal, annualRate, months, taxFree = false, adminFee = 0, irFlat = false }) {
   const effectiveRate = annualRate - adminFee;
   const monthlyRate = annualToMonthlyRate(effectiveRate);
   const grossFinal = principal * Math.pow(1 + monthlyRate, months);
@@ -32,8 +33,7 @@ export function calcFixedIncome({ principal, annualRate, months, taxFree = false
 
   let netProfit = grossProfit;
   if (!taxFree) {
-    const days = months * 30;
-    const irRate = getIRRate(days);
+    const irRate = irFlat ? 0.15 : getIRRate(months * 30);
     netProfit = round(grossProfit * (1 - irRate));
   }
 
@@ -160,11 +160,89 @@ export function getInvestmentProducts(cdiRate = 14.75) {
       riskColor: '#EF4444',
       annualRate: 15,
       taxFree: false,
+      irFlat: false,
       adminFee: 0,
       liquidity: 'D+2 (mercado)',
       guarantee: 'Nenhuma',
       description: 'Média histórica do Ibovespa (sem garantias futuras).',
       color: '#F87171',
+    },
+
+    // ── Ativos Alternativos ───────────────────────────────────────────────────
+    {
+      id: 'sp500',
+      name: 'S&P 500 (IVVB11)',
+      category: 'Internacional',
+      risk: 'Alto',
+      riskColor: '#EF4444',
+      annualRate: 20,
+      taxFree: false,
+      irFlat: false,
+      adminFee: 0.23,
+      liquidity: 'D+2 (mercado)',
+      guarantee: 'Nenhuma',
+      description: 'Média histórica em BRL incluindo variação cambial. Sem garantia futura.',
+      color: '#818CF8',
+    },
+    {
+      id: 'ouro',
+      name: 'Ouro (GOLD11)',
+      category: 'Ativos Reais',
+      risk: 'Moderado',
+      riskColor: '#F59E0B',
+      annualRate: 14,
+      taxFree: false,
+      irFlat: true,
+      adminFee: 0.3,
+      liquidity: 'D+2 (mercado)',
+      guarantee: 'Nenhuma',
+      description: 'Média histórica em BRL (~12% a.a.). IR de 15% sobre ganho de capital.',
+      color: '#F59E0B',
+    },
+    {
+      id: 'dolar',
+      name: 'Dólar (USD)',
+      category: 'Internacional',
+      risk: 'Moderado',
+      riskColor: '#F59E0B',
+      annualRate: 8,
+      taxFree: false,
+      irFlat: true,
+      adminFee: 0,
+      liquidity: 'Imediata',
+      guarantee: 'Nenhuma',
+      description: 'Valorização média histórica do USD frente ao BRL. IR 15% sobre ganho.',
+      color: '#34D399',
+    },
+    {
+      id: 'btc',
+      name: 'Bitcoin (BTC)',
+      category: 'Cripto',
+      risk: 'Muito Alto',
+      riskColor: '#DC2626',
+      annualRate: 50,
+      taxFree: false,
+      irFlat: true,
+      adminFee: 0,
+      liquidity: 'Imediata',
+      guarantee: 'Nenhuma',
+      description: 'Média histórica anual em BRL (~50% a.a.). Volatilidade extrema. IR 15%.',
+      color: '#F97316',
+    },
+    {
+      id: 'eth',
+      name: 'Ethereum (ETH)',
+      category: 'Cripto',
+      risk: 'Muito Alto',
+      riskColor: '#DC2626',
+      annualRate: 40,
+      taxFree: false,
+      irFlat: true,
+      adminFee: 0,
+      liquidity: 'Imediata',
+      guarantee: 'Nenhuma',
+      description: 'Média histórica anual em BRL (~40% a.a.). Volatilidade extrema. IR 15%.',
+      color: '#A78BFA',
     },
   ];
 }
@@ -182,6 +260,7 @@ export function compareAllInvestments({ principal, months, cdiRate }) {
       months,
       taxFree: p.taxFree,
       adminFee: p.adminFee,
+      irFlat: p.irFlat ?? false,
     }),
   })).sort((a, b) => b.netFinal - a.netFinal);
 }
