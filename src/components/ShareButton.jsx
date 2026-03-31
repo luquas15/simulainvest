@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useSimulator } from '../context/SimulatorContext';
 import { formatCurrency } from '../utils/finance';
+import SimulationHistory from './SimulationHistory';
 
 // Constrói URL de compartilhamento com os parâmetros atuais
 function buildShareUrl(params) {
@@ -72,7 +73,8 @@ export default function ShareButton() {
   const [copied, setCopied] = useState(false);
   const [open, setOpen] = useState(false);
 
-  const url = buildShareUrl(params);
+  // URL já é mantida atualizada pelo SimulatorContext via replaceState
+  const url = window.location.href;
   const text = buildShareText(summary, params);
 
   const copyLink = async () => {
@@ -151,10 +153,7 @@ export default function ShareButton() {
 
       {/* Overlay para fechar */}
       {open && (
-        <div
-          className="fixed inset-0 z-10"
-          onClick={() => setOpen(false)}
-        />
+        <div className="fixed inset-0 z-10" onClick={() => setOpen(false)} />
       )}
     </div>
   );

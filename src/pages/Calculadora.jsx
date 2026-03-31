@@ -4,6 +4,7 @@ import InvestmentChart from '../components/InvestmentChart';
 import TimelineTable from '../components/TimelineTable';
 import ShareButton from '../components/ShareButton';
 import Insights from '../components/Insights';
+import SimulationHistory from '../components/SimulationHistory';
 
 // Página dedicada para SEO: /calculadora-juros-compostos
 export default function Calculadora() {
@@ -29,6 +30,7 @@ export default function Calculadora() {
           <div className="flex justify-end">
             <ShareButton />
           </div>
+          <SimulationHistory />
         </div>
       </div>
 

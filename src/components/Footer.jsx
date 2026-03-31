@@ -7,6 +7,9 @@ const TOOLS = [
   { to: '/comparador-investimentos',    label: 'Comparador de Investimentos' },
   { to: '/simulador-aposentadoria',     label: 'Simulador de Aposentadoria' },
   { to: '/calculadora-financiamento',   label: 'Calculadora de Financiamento' },
+  { to: '/simulador-dividendos',        label: 'Simulador de Dividendos' },
+  { to: '/aluguel-ou-compra',           label: 'Alugar ou Comprar?' },
+  { to: '/calculadora-irpf',            label: 'Calculadora de IRPF' },
 ];
 
 const COMING_SOON = [

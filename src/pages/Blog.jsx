@@ -74,9 +74,12 @@ const TOOLS = [
   { to: '/calculadora-juros-compostos', label: 'Calculadora de Juros Compostos',emoji: '🧮', desc: 'Fórmula M = C(1+i)ⁿ em segundos' },
   { to: '/simulador-investimento',      label: 'Simulador Financeiro',           emoji: '📈', desc: 'Compare cenários conservador e agressivo' },
   { to: '/calculadora-metas',           label: 'Calculadora de Metas',           emoji: '🎯', desc: 'Quanto guardar para atingir seu objetivo' },
-  { to: '/comparador-investimentos',    label: 'Comparador de Investimentos',    emoji: '⚖️', desc: 'CDB, LCI, Tesouro, FIIs e mais' },
+  { to: '/comparador-investimentos',    label: 'Comparador de Investimentos',    emoji: '⚖️', desc: 'CDB, LCI, Tesouro, FIIs, BTC e mais' },
   { to: '/simulador-aposentadoria',     label: 'Simulador de Aposentadoria',     emoji: '🏖️', desc: 'Planeje sua independência financeira' },
   { to: '/calculadora-financiamento',   label: 'Calculadora de Financiamento',   emoji: '🏠', desc: 'Price vs SAC, parcelas e juros totais' },
+  { to: '/simulador-dividendos',        label: 'Simulador de Dividendos',        emoji: '💰', desc: 'Quando você atinge sua renda passiva?' },
+  { to: '/aluguel-ou-compra',           label: 'Alugar ou Comprar Imóvel?',      emoji: '🏡', desc: 'Compare patrimônio líquido de cada opção' },
+  { to: '/calculadora-irpf',            label: 'Calculadora de IRPF',            emoji: '📋', desc: 'Completo vs simplificado — qual paga menos?' },
 ];
 
 export default function Blog() {

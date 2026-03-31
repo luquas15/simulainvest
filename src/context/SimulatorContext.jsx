@@ -1,7 +1,9 @@
-import { createContext, useContext, useMemo, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { annualToMonthlyRate, simulateInvestment, generateScenarios, generateInsights } from '../utils/finance';
 
 const SimulatorContext = createContext(null);
+
+const HISTORY_KEY = 'simulainvest-sim-history';
 
 // Valores padrão para o formulário
 const DEFAULT_PARAMS = {
@@ -15,11 +17,43 @@ const DEFAULT_PARAMS = {
   includeInflation: false,
 };
 
+// Lê parâmetros da URL (mesmo formato do ShareButton)
+function readParamsFromUrl() {
+  try {
+    const sp = new URLSearchParams(window.location.search);
+    const overrides = {};
+    if (sp.has('vi'))  overrides.initialValue    = Number(sp.get('vi'));
+    if (sp.has('mc'))  overrides.monthlyContrib  = Number(sp.get('mc'));
+    if (sp.has('rate'))overrides.annualRate       = Number(sp.get('rate'));
+    if (sp.has('rt'))  overrides.rateType         = sp.get('rt');
+    if (sp.has('per')) overrides.periods          = Number(sp.get('per'));
+    if (sp.has('pt'))  overrides.periodType       = sp.get('pt');
+    if (sp.has('inf')) overrides.inflationRate    = Number(sp.get('inf'));
+    if (sp.has('ii'))  overrides.includeInflation = sp.get('ii') === '1';
+    return Object.keys(overrides).length ? { ...DEFAULT_PARAMS, ...overrides } : null;
+  } catch { return null; }
+}
+
 export function SimulatorProvider({ children }) {
-  const [params, setParams] = useState(DEFAULT_PARAMS);
+  const [params, setParams] = useState(() => readParamsFromUrl() ?? DEFAULT_PARAMS);
 
   const updateParam = (key, value) =>
     setParams(prev => ({ ...prev, [key]: value }));
+
+  // Sincroniza URL com os parâmetros atuais (sem criar entrada no histórico)
+  useEffect(() => {
+    const sp = new URLSearchParams({
+      vi:   params.initialValue,
+      mc:   params.monthlyContrib,
+      rate: params.annualRate,
+      rt:   params.rateType,
+      per:  params.periods,
+      pt:   params.periodType,
+      inf:  params.inflationRate,
+      ii:   params.includeInflation ? '1' : '0',
+    });
+    window.history.replaceState(null, '', `${window.location.pathname}?${sp.toString()}`);
+  }, [params]);
 
   // Normaliza parâmetros para o cálculo
   const normalized = useMemo(() => {
@@ -78,6 +112,29 @@ export function SimulatorProvider({ children }) {
     });
   }, [normalized, summary]);
 
+  // Histórico: salva as últimas 5 simulações no localStorage
+  const [history, setHistory] = useState(() => {
+    try { return JSON.parse(localStorage.getItem(HISTORY_KEY)) ?? []; }
+    catch { return []; }
+  });
+
+  useEffect(() => {
+    if (!summary) return;
+    const entry = {
+      id: Date.now(),
+      label: `R$ ${params.initialValue.toLocaleString('pt-BR')} · ${params.annualRate}% a.a. · ${params.periods} ${params.periodType}`,
+      finalBalance: summary.finalBalance,
+      params: { ...params },
+      savedAt: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
+    };
+    setHistory(prev => {
+      const next = [entry, ...prev.filter(h => h.id !== entry.id)].slice(0, 5);
+      try { localStorage.setItem(HISTORY_KEY, JSON.stringify(next)); } catch {}
+      return next;
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [summary?.finalBalance, params.initialValue, params.annualRate, params.periods]);
+
   return (
     <SimulatorContext.Provider value={{
       params,
@@ -87,6 +144,8 @@ export function SimulatorProvider({ children }) {
       scenarios,
       summary,
       insights,
+      copyShareUrl,
+      history,
     }}>
       {children}
     </SimulatorContext.Provider>

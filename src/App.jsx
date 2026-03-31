@@ -17,6 +17,9 @@ const ComparadorInvestimentos = lazy(() => import('./pages/ComparadorInvestiment
 const SimuladorAposentadoria  = lazy(() => import('./pages/SimuladorAposentadoria'));
 const CalculadoraFinanciamento= lazy(() => import('./pages/CalculadoraFinanciamento'));
 const Blog                    = lazy(() => import('./pages/Blog'));
+const SimuladorDividendos     = lazy(() => import('./pages/SimuladorDividendos'));
+const CalculadoraAluguelCompra= lazy(() => import('./pages/CalculadoraAluguelCompra'));
+const CalculadoraIRPF         = lazy(() => import('./pages/CalculadoraIRPF'));
 const Privacidade             = lazy(() => import('./pages/Privacidade'));
 const Termos                  = lazy(() => import('./pages/Termos'));
 
@@ -54,6 +57,9 @@ export default function App() {
                     <Route path="/simulador-aposentadoria"      element={<SimuladorAposentadoria />} />
                     <Route path="/calculadora-financiamento"    element={<CalculadoraFinanciamento />} />
                     <Route path="/blog"                         element={<Blog />} />
+                    <Route path="/simulador-dividendos"         element={<SimuladorDividendos />} />
+                    <Route path="/aluguel-ou-compra"            element={<CalculadoraAluguelCompra />} />
+                    <Route path="/calculadora-irpf"             element={<CalculadoraIRPF />} />
                     <Route path="/privacidade"                  element={<Privacidade />} />
                     <Route path="/termos"                       element={<Termos />} />
                   </Routes>
