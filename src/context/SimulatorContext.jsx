@@ -40,8 +40,9 @@ export function SimulatorProvider({ children }) {
   const updateParam = (key, value) =>
     setParams(prev => ({ ...prev, [key]: value }));
 
-  // Sincroniza URL com os parâmetros atuais (sem criar entrada no histórico)
+  // Sincroniza URL com os parâmetros (apenas na página da calculadora)
   useEffect(() => {
+    if (!window.location.pathname.includes('calculadora-juros-compostos')) return;
     const sp = new URLSearchParams({
       vi:   params.initialValue,
       mc:   params.monthlyContrib,

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 const TOOLS = [
   { to: '/',                            label: 'Simulador de Investimento' },
   { to: '/calculadora-juros-compostos', label: 'Calculadora de Juros Compostos' },
+  { to: '/simulador-investimento',      label: 'Simulador Financeiro' },
   { to: '/calculadora-metas',           label: 'Calculadora de Metas' },
   { to: '/comparador-investimentos',    label: 'Comparador de Investimentos' },
   { to: '/simulador-aposentadoria',     label: 'Simulador de Aposentadoria' },
@@ -10,13 +11,14 @@ const TOOLS = [
   { to: '/simulador-dividendos',        label: 'Simulador de Dividendos' },
   { to: '/aluguel-ou-compra',           label: 'Alugar ou Comprar?' },
   { to: '/calculadora-irpf',            label: 'Calculadora de IRPF' },
+  { to: '/mercado-ao-vivo',             label: 'Mercado ao Vivo' },
 ];
 
 const COMING_SOON = [
-  'Simulador de Dividendos',
   'Comparador de Fundos',
-  'Calculadora de IRPF',
   'Simulador de Portfólio',
+  'Calculadora de Previdência',
+  'Planilha de Orçamento',
 ];
 
 export default function Footer() {

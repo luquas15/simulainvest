@@ -144,12 +144,18 @@ function useChart(containerRef) {
       borderUpColor: '#00D97E', borderDownColor: '#FF4560',
       wickUpColor: '#00D97E', wickDownColor: '#FF4560',
     });
+    candleSeries.priceScale().applyOptions({
+      scaleMargins: { top: 0.05, bottom: 0.22 },
+    });
 
     const volSeries = chart.addSeries(HistogramSeries, {
       priceFormat: { type: 'volume' },
       priceScaleId: 'vol',
     });
-    chart.priceScale('vol').applyOptions({ scaleMargins: { top: 0.82, bottom: 0 } });
+    chart.priceScale('vol').applyOptions({
+      scaleMargins: { top: 0.8, bottom: 0 },
+      visible: false,
+    });
 
     chartRef.current  = chart;
     candleRef.current = candleSeries;
@@ -168,7 +174,7 @@ function useChart(containerRef) {
     candleRef.current.setData(candles);
     volRef.current.setData(candles.map(c => ({
       time: c.time, value: c.volume,
-      color: c.close >= c.open ? '#065F46' : '#7F1D1D',
+      color: c.close >= c.open ? '#00D97E55' : '#FF456055',
     })));
     chartRef.current?.timeScale().fitContent();
   }, []);
@@ -177,7 +183,7 @@ function useChart(containerRef) {
     candleRef.current?.update(candle);
     volRef.current?.update({
       time: candle.time, value: candle.volume,
-      color: candle.close >= candle.open ? '#065F46' : '#7F1D1D',
+      color: candle.close >= candle.open ? '#00D97E55' : '#FF456055',
     });
   }, []);
 
