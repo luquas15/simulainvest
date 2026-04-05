@@ -80,6 +80,7 @@ const TOOLS = [
   { to: '/simulador-dividendos',        label: 'Simulador de Dividendos',        emoji: '💰', desc: 'Quando você atinge sua renda passiva?' },
   { to: '/aluguel-ou-compra',           label: 'Alugar ou Comprar Imóvel?',      emoji: '🏡', desc: 'Compare patrimônio líquido de cada opção' },
   { to: '/calculadora-irpf',            label: 'Calculadora de IRPF',            emoji: '📋', desc: 'Completo vs simplificado — qual paga menos?' },
+  { to: '/mercado-ao-vivo',             label: 'Mercado ao Vivo',                emoji: '📡', desc: 'Gráficos de candlestick em tempo real' },
 ];
 
 export default function Blog() {

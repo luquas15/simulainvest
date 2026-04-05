@@ -11,6 +11,9 @@ export default defineConfig({
           if (id.includes('node_modules/recharts') || id.includes('node_modules/d3')) {
             return 'chart-vendor';
           }
+          if (id.includes('node_modules/lightweight-charts')) {
+            return 'trading-vendor';
+          }
           if (id.includes('node_modules/react') || id.includes('node_modules/react-dom') || id.includes('node_modules/react-router-dom')) {
             return 'react-vendor';
           }

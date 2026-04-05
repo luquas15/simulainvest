@@ -4,6 +4,7 @@ import { useTheme } from '../context/ThemeContext';
 
 const NAV_PRIMARY = [
   { to: '/',                            label: 'Simulador' },
+  { to: '/mercado-ao-vivo',             label: 'Mercado ao Vivo' },
   { to: '/comparador-investimentos',    label: 'Comparador' },
   { to: '/blog',                        label: 'Ferramentas' },
 ];
@@ -19,6 +20,7 @@ const NAV_TOOLS = [
   { to: '/simulador-dividendos',         label: '💰 Simulador de Dividendos' },
   { to: '/aluguel-ou-compra',            label: '🏡 Alugar ou Comprar?' },
   { to: '/calculadora-irpf',             label: '📋 Calculadora de IRPF' },
+  { to: '/mercado-ao-vivo',             label: '📡 Mercado ao Vivo' },
 ];
 
 export default function Header() {
