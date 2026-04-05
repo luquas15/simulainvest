@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom';
+import AdUnit, { AD_SLOTS } from '../components/AdUnit';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 const ARTICLES = [
   {
@@ -84,6 +86,7 @@ const TOOLS = [
 ];
 
 export default function Blog() {
+  usePageTitle('Hub de Finanças e Ferramentas');
   return (
     <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
       {/* Header */}
@@ -163,6 +166,8 @@ export default function Blog() {
           ))}
         </div>
       </section>
+
+      <AdUnit slot={AD_SLOTS.RELAXED} className="mt-8" />
 
       {/* SEO Footer text */}
       <section className="mt-14 rounded-2xl border border-gray-100 bg-white p-8 dark:border-gray-800 dark:bg-gray-900">

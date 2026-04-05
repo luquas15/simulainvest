@@ -5,6 +5,8 @@ import {
 } from 'recharts';
 import { annualToMonthlyRate, formatCurrency } from '../utils/finance';
 import { useMarketData } from '../context/MarketDataContext';
+import AdUnit, { AD_SLOTS } from '../components/AdUnit';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 function Slider({ label, id, min, max, step, value, onChange, format, hint }) {
   return (
@@ -29,6 +31,7 @@ function Slider({ label, id, min, max, step, value, onChange, format, hint }) {
 }
 
 export default function SimuladorDividendos() {
+  usePageTitle('Simulador de Dividendos');
   const { rates } = useMarketData();
 
   const [capital,             setCapital]             = useState(10000);
@@ -342,6 +345,8 @@ export default function SimuladorDividendos() {
           </div>
         </div>
       </div>
+
+      <AdUnit slot={AD_SLOTS.HORIZONTAL} className="mt-8" />
 
       {/* Cards informativos / SEO */}
       <section className="mt-12 grid gap-6 sm:grid-cols-3">

@@ -5,6 +5,8 @@ import {
 } from 'recharts';
 import { compareSystems, calcMaxLoan } from '../utils/loan';
 import { annualToMonthlyRate, formatCurrency } from '../utils/finance';
+import AdUnit, { AD_SLOTS } from '../components/AdUnit';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 function Slider({ label, id, min, max, step, value, onChange, format, hint }) {
   return (
@@ -25,6 +27,7 @@ function Slider({ label, id, min, max, step, value, onChange, format, hint }) {
 const PAGE_SIZE = 12;
 
 export default function CalculadoraFinanciamento() {
+  usePageTitle('Calculadora de Financiamento Imobiliário');
   const [principal,    setPrincipal]    = useState(300000);
   const [annualRate,   setAnnualRate]   = useState(11);
   const [periods,      setPeriods]      = useState(360);
@@ -226,6 +229,8 @@ export default function CalculadoraFinanciamento() {
           </div>
         </div>
       </div>
+
+      <AdUnit slot={AD_SLOTS.HORIZONTAL} className="mt-8" />
 
       {/* SEO content */}
       <section className="mt-12 grid gap-6 sm:grid-cols-2">

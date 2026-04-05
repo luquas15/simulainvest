@@ -3,6 +3,8 @@ import { createChart, CandlestickSeries, HistogramSeries } from 'lightweight-cha
 import { fetchCandles, fetchTicker24h, subscribeKline, subscribeTicker } from '../utils/binanceApi';
 import { fetchBrapiQuotes, fetchBrapiChart, BR_INTERVAL_MAP } from '../utils/brapiApi';
 import { getCachedAssetPrices } from '../utils/assetApi';
+import AdUnit, { AD_SLOTS } from '../components/AdUnit';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 // ─── Ativos ───────────────────────────────────────────────────────────────
 
@@ -206,6 +208,8 @@ export default function MercadoAoVivo() {
   const [error,        setError]        = useState(null);
   const [usdBrl,       setUsdBrl]       = useState(null);
   const [watchPrices,  setWatchPrices]  = useState({});   // { symbol: { price, changePct } }
+
+  usePageTitle('Mercado ao Vivo — Cripto e B3');
 
   const unsubKline  = useRef(null);
   const unsubTicker = useRef(null);
@@ -533,6 +537,8 @@ export default function MercadoAoVivo() {
 
           </div>
         </div>
+
+        <AdUnit slot={AD_SLOTS.HORIZONTAL} className="mt-5 rounded-2xl bg-[#141821]" />
 
         {/* Disclaimer */}
         <p className="mt-5 text-center text-xs text-gray-700">

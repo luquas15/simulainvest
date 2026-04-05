@@ -8,8 +8,11 @@ import TimelineTable from '../components/TimelineTable';
 import ShareButton from '../components/ShareButton';
 import ShareCard from '../components/ShareCard';
 import ToolsHub from '../components/ToolsHub';
+import AdUnit, { AD_SLOTS } from '../components/AdUnit';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 export default function Home() {
+  usePageTitle('Simulador de Investimento e Calculadora de Juros Compostos');
   return (
     <>
       <Hero />
@@ -20,10 +23,7 @@ export default function Home() {
           <div className="space-y-6">
             <SimulatorForm />
 
-            {/* Ad placeholder */}
-            <div className="flex h-32 items-center justify-center rounded-2xl border border-dashed border-gray-200 bg-gray-50 text-xs text-gray-400 dark:border-gray-700 dark:bg-gray-900">
-              📢 Google Ads
-            </div>
+            <AdUnit slot={AD_SLOTS.SQUARE} className="rounded-2xl" />
           </div>
 
           {/* Coluna direita — resultados */}
@@ -57,6 +57,8 @@ export default function Home() {
         <div className="mt-8 -mx-4 sm:-mx-6">
           <ToolsHub />
         </div>
+
+        <AdUnit slot={AD_SLOTS.HORIZONTAL} className="mt-8" />
 
         {/* Conteúdo SEO */}
         <section className="mt-8 rounded-2xl border border-gray-100 bg-white p-8 dark:border-gray-800 dark:bg-gray-900">

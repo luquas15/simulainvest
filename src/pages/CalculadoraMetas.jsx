@@ -9,6 +9,8 @@ import {
   simulateGoalProgress,
 } from '../utils/goals';
 import { annualToMonthlyRate, formatCurrency } from '../utils/finance';
+import AdUnit, { AD_SLOTS } from '../components/AdUnit';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 const PRESETS = [
   { label: '🏖️ Viagem',        value: 15000 },
@@ -38,6 +40,7 @@ const PCT = v => `${v}%`;
 const MO  = v => `${v} meses`;
 
 export default function CalculadoraMetas() {
+  usePageTitle('Calculadora de Metas Financeiras');
   const [goalValue,     setGoalValue]     = useState(50000);
   const [initialValue,  setInitialValue]  = useState(2000);
   const [monthlyContrib,setMonthlyContrib]= useState(500);
@@ -204,6 +207,8 @@ export default function CalculadoraMetas() {
           </div>
         </div>
       </div>
+
+      <AdUnit slot={AD_SLOTS.HORIZONTAL} className="mt-8" />
 
       {/* Conteúdo SEO */}
       <section className="mt-12 rounded-2xl border border-gray-100 bg-white p-8 dark:border-gray-800 dark:bg-gray-900">

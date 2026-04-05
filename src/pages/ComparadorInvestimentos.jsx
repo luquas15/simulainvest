@@ -7,6 +7,8 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, Cell,
 } from 'recharts';
+import AdUnit, { AD_SLOTS } from '../components/AdUnit';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 function Slider({ label, id, min, max, step, value, onChange, format }) {
   return (
@@ -53,6 +55,7 @@ function ChangeBadge({ value }) {
 }
 
 export default function ComparadorInvestimentos() {
+  usePageTitle('Comparador de Investimentos');
   const { rates, isLive } = useMarketData();
   const [principal, setPrincipal] = useState(10000);
   const [months,    setMonths]    = useState(12);
@@ -220,12 +223,17 @@ export default function ComparadorInvestimentos() {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <table className="w-full min-w-[520px] text-sm">
             <thead>
               <tr className="border-b border-gray-50 bg-gray-50/50 dark:border-gray-800 dark:bg-gray-800/50">
-                {['#', 'Produto', 'Categoria', 'Taxa bruta', 'Líquido final', 'Lucro líquido', 'Risco', 'Garantia'].map(h => (
-                  <th key={h} className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-400">{h}</th>
-                ))}
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-400">#</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-400">Produto</th>
+                <th className="hidden px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-400 sm:table-cell">Categoria</th>
+                <th className="hidden px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-400 md:table-cell">Taxa bruta</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-400">Líquido final</th>
+                <th className="hidden px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-400 sm:table-cell">Lucro líquido</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-400">Risco</th>
+                <th className="hidden px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-400 lg:table-cell">Garantia</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50 dark:divide-gray-800">
@@ -244,7 +252,7 @@ export default function ComparadorInvestimentos() {
                         <span className="h-2.5 w-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: r.color }} />
                         <div>
                           <p className="font-medium text-gray-900 dark:text-white">{r.name}</p>
-                          <p className="text-xs text-gray-400 max-w-[200px] truncate">{r.description}</p>
+                          <p className="hidden text-xs text-gray-400 max-w-[200px] truncate sm:block">{r.description}</p>
                           {r.id === 'btc' && assets?.btcBrl && (
                             <p className="text-xs text-orange-500 font-medium">
                               {formatCurrency(assets.btcBrl)} <ChangeBadge value={assets.btcChange24h} />
@@ -263,15 +271,15 @@ export default function ComparadorInvestimentos() {
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-xs text-gray-500 dark:text-gray-400">{r.category}</td>
-                    <td className="px-4 py-3 font-medium text-gray-700 dark:text-gray-300">{r.annualRate.toFixed(2)}% a.a.</td>
+                    <td className="hidden px-4 py-3 text-xs text-gray-500 dark:text-gray-400 sm:table-cell">{r.category}</td>
+                    <td className="hidden px-4 py-3 font-medium text-gray-700 dark:text-gray-300 md:table-cell">{r.annualRate.toFixed(2)}% a.a.</td>
                     <td className="px-4 py-3">
                       <p className="font-bold text-gray-900 dark:text-white">{formatCurrency(r.netFinal)}</p>
                       {diffFromBest < 0 && (
                         <p className="text-xs text-red-400">{formatCurrency(diffFromBest)}</p>
                       )}
                     </td>
-                    <td className="px-4 py-3 font-semibold text-green-600 dark:text-green-400">
+                    <td className="hidden px-4 py-3 font-semibold text-green-600 dark:text-green-400 sm:table-cell">
                       +{formatCurrency(r.netProfit)}
                     </td>
                     <td className="px-4 py-3">
@@ -279,7 +287,7 @@ export default function ComparadorInvestimentos() {
                         {r.risk}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-xs text-gray-400">{r.guarantee}</td>
+                    <td className="hidden px-4 py-3 text-xs text-gray-400 lg:table-cell">{r.guarantee}</td>
                   </tr>
                 );
               })}
@@ -293,6 +301,8 @@ export default function ComparadorInvestimentos() {
           </p>
         </div>
       </div>
+
+      <AdUnit slot={AD_SLOTS.HORIZONTAL} className="mt-8" />
 
       {/* SEO content */}
       <section className="mt-10 grid gap-6 sm:grid-cols-2">

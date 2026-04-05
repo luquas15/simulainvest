@@ -1,5 +1,7 @@
 import { useState, useMemo } from 'react';
 import { calcIRPF, DEDUCAO_DEPENDENTE, LIMITE_EDUCACAO, LIMITE_SIMPLIFICADO } from '../utils/irpf';
+import AdUnit, { AD_SLOTS } from '../components/AdUnit';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 // ─── helpers ────────────────────────────────────────────────────────────────
 
@@ -138,6 +140,7 @@ function BracketViz({ base }) {
 // ─── main page ───────────────────────────────────────────────────────────────
 
 export default function CalculadoraIRPF() {
+  usePageTitle('Calculadora de IRPF 2024');
   const [inputMode,   setInputMode]   = useState('anual');
   const [rendimento,  setRendimento]  = useState(60000);
   const [inss,        setInss]        = useState(7200);
@@ -428,6 +431,8 @@ export default function CalculadoraIRPF() {
 
         </div>{/* end right panel */}
       </div>{/* end grid */}
+
+      <AdUnit slot={AD_SLOTS.RELAXED} className="mt-8" />
     </main>
   );
 }

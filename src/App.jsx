@@ -23,6 +23,7 @@ const CalculadoraAluguelCompra= lazy(() => import('./pages/CalculadoraAluguelCom
 const CalculadoraIRPF         = lazy(() => import('./pages/CalculadoraIRPF'));
 const Privacidade             = lazy(() => import('./pages/Privacidade'));
 const Termos                  = lazy(() => import('./pages/Termos'));
+const NotFound                = lazy(() => import('./pages/NotFound'));
 
 function PageLoader() {
   return (
@@ -64,6 +65,7 @@ export default function App() {
                     <Route path="/calculadora-irpf"             element={<CalculadoraIRPF />} />
                     <Route path="/privacidade"                  element={<Privacidade />} />
                     <Route path="/termos"                       element={<Termos />} />
+                    <Route path="*"                             element={<NotFound />} />
                   </Routes>
                 </Suspense>
               </div>

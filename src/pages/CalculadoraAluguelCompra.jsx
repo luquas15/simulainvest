@@ -5,6 +5,8 @@ import {
 } from 'recharts';
 import { formatCurrency } from '../utils/finance';
 import { useMarketData } from '../context/MarketDataContext';
+import AdUnit, { AD_SLOTS } from '../components/AdUnit';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 const annualToMonthlyRate = (annual) => Math.pow(1 + annual / 100, 1 / 12) - 1;
 
@@ -44,6 +46,7 @@ const PCT = v => `${v}% a.a.`;
 const ANOS = v => `${v} anos`;
 
 export default function CalculadoraAluguelCompra() {
+  usePageTitle('Alugar ou Comprar Imóvel?');
   const { rates, isLive } = useMarketData();
 
   const [imovelValor,          setImovelValor]          = useState(400000);
@@ -480,6 +483,8 @@ export default function CalculadoraAluguelCompra() {
           </div>
         </div>
       </div>
+
+      <AdUnit slot={AD_SLOTS.RELAXED} className="mt-8" />
 
       {/* SEO info cards */}
       <section className="mt-12 grid gap-6 sm:grid-cols-3">

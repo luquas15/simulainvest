@@ -5,9 +5,12 @@ import TimelineTable from '../components/TimelineTable';
 import ShareButton from '../components/ShareButton';
 import Insights from '../components/Insights';
 import SimulationHistory from '../components/SimulationHistory';
+import AdUnit, { AD_SLOTS } from '../components/AdUnit';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 // Página dedicada para SEO: /calculadora-juros-compostos
 export default function Calculadora() {
+  usePageTitle('Calculadora de Juros Compostos');
   return (
     <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
       {/* SEO Header */}
@@ -33,6 +36,8 @@ export default function Calculadora() {
           <SimulationHistory />
         </div>
       </div>
+
+      <AdUnit slot={AD_SLOTS.HORIZONTAL} className="mt-8" />
 
       <div className="mt-10">
         <TimelineTable />

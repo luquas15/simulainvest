@@ -6,6 +6,8 @@ import {
 import { simulateRetirement, calcRetirementCapital } from '../utils/goals';
 import { annualToMonthlyRate, formatCurrency } from '../utils/finance';
 import { useMarketData } from '../context/MarketDataContext';
+import AdUnit, { AD_SLOTS } from '../components/AdUnit';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 function Slider({ label, id, min, max, step, value, onChange, format, hint }) {
   return (
@@ -24,6 +26,7 @@ function Slider({ label, id, min, max, step, value, onChange, format, hint }) {
 }
 
 export default function SimuladorAposentadoria() {
+  usePageTitle('Simulador de Aposentadoria');
   const { rates } = useMarketData();
   const [currentAge,       setCurrentAge]       = useState(30);
   const [retirementAge,    setRetirementAge]     = useState(60);
@@ -187,6 +190,8 @@ export default function SimuladorAposentadoria() {
           </div>
         </div>
       </div>
+
+      <AdUnit slot={AD_SLOTS.RELAXED} className="mt-8" />
 
       {/* Dicas SEO */}
       <section className="mt-12 grid gap-6 sm:grid-cols-3">
