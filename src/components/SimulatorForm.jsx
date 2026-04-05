@@ -1,35 +1,11 @@
 import { useEffect } from 'react';
 import { useSimulator } from '../context/SimulatorContext';
 import { useMarketData } from '../context/MarketDataContext';
+import SliderInput from './SliderInput';
 
-// Slider com label e valor formatado
-function RangeInput({ label, id, min, max, step, value, onChange, format }) {
-  return (
-    <div>
-      <div className="mb-1 flex items-center justify-between">
-        <label htmlFor={id} className="text-sm font-medium text-gray-700 dark:text-gray-300">
-          {label}
-        </label>
-        <span className="rounded-md bg-brand/10 px-2 py-0.5 text-sm font-semibold text-brand">
-          {format ? format(value) : value}
-        </span>
-      </div>
-      <input
-        id={id}
-        type="range"
-        min={min}
-        max={max}
-        step={step}
-        value={value}
-        onChange={e => onChange(Number(e.target.value))}
-        className="h-2 w-full cursor-pointer appearance-none rounded-full bg-gray-200 accent-brand dark:bg-gray-700"
-      />
-      <div className="mt-0.5 flex justify-between text-xs text-gray-400">
-        <span>{format ? format(min) : min}</span>
-        <span>{format ? format(max) : max}</span>
-      </div>
-    </div>
-  );
+// Alias com showRange para manter min/max visíveis no formulário principal
+function RangeInput(props) {
+  return <SliderInput {...props} showRange />;
 }
 
 // Input numérico com prefixo/sufixo

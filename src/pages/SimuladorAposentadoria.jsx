@@ -8,22 +8,8 @@ import { annualToMonthlyRate, formatCurrency } from '../utils/finance';
 import { useMarketData } from '../context/MarketDataContext';
 import AdUnit, { AD_SLOTS } from '../components/AdUnit';
 import { usePageTitle } from '../hooks/usePageTitle';
+import SliderInput from '../components/SliderInput';
 
-function Slider({ label, id, min, max, step, value, onChange, format, hint }) {
-  return (
-    <div>
-      <div className="mb-1 flex justify-between">
-        <label htmlFor={id} className="text-sm font-medium text-gray-700 dark:text-gray-300">{label}</label>
-        <span className="rounded-md bg-brand/10 px-2 py-0.5 text-sm font-semibold text-brand">{format(value)}</span>
-      </div>
-      <input id={id} type="range" min={min} max={max} step={step} value={value}
-        onChange={e => onChange(Number(e.target.value))}
-        className="h-2 w-full cursor-pointer appearance-none rounded-full bg-gray-200 accent-brand dark:bg-gray-700"
-      />
-      {hint && <p className="mt-0.5 text-xs text-gray-400">{hint}</p>}
-    </div>
-  );
-}
 
 export default function SimuladorAposentadoria() {
   usePageTitle('Simulador de Aposentadoria');
@@ -86,18 +72,18 @@ export default function SimuladorAposentadoria() {
           <h2 className="text-base font-semibold text-gray-900 dark:text-white">Seu perfil</h2>
 
           <div className="grid grid-cols-2 gap-4">
-            <Slider label="Idade atual"        id="age"     min={18} max={65} step={1} value={currentAge}     onChange={setCurrentAge}     format={v => `${v} anos`} />
-            <Slider label="Aposentadoria"      id="ret"     min={45} max={80} step={1} value={retirementAge}  onChange={setRetirementAge}  format={v => `${v} anos`} />
+            <SliderInput label="Idade atual"        id="age"     min={18} max={65} step={1} value={currentAge}     onChange={setCurrentAge}     format={v => `${v} anos`} />
+            <SliderInput label="Aposentadoria"      id="ret"     min={45} max={80} step={1} value={retirementAge}  onChange={setRetirementAge}  format={v => `${v} anos`} />
           </div>
 
-          <Slider label="Expectativa de vida" id="life"    min={70} max={100} step={1} value={lifeExpectancy} onChange={setLifeExpectancy} format={v => `${v} anos`} />
-          <Slider label="Patrimônio atual"    id="savings" min={0} max={500000} step={1000} value={currentSavings}  onChange={setCurrentSavings}  format={v => `R$ ${Number(v).toLocaleString('pt-BR')}`} />
-          <Slider label="Aporte mensal"       id="contrib" min={0} max={10000}  step={100}  value={monthlyContrib}  onChange={setMonthlyContrib}  format={v => `R$ ${Number(v).toLocaleString('pt-BR')}`} />
-          <Slider label="Renda mensal desejada na aposentadoria" id="income" min={1000} max={30000} step={500} value={retirementIncome} onChange={setRetirementIncome} format={v => `R$ ${Number(v).toLocaleString('pt-BR')}`} />
+          <SliderInput label="Expectativa de vida" id="life"    min={70} max={100} step={1} value={lifeExpectancy} onChange={setLifeExpectancy} format={v => `${v} anos`} />
+          <SliderInput label="Patrimônio atual"    id="savings" min={0} max={500000} step={1000} value={currentSavings}  onChange={setCurrentSavings}  format={v => `R$ ${Number(v).toLocaleString('pt-BR')}`} />
+          <SliderInput label="Aporte mensal"       id="contrib" min={0} max={10000}  step={100}  value={monthlyContrib}  onChange={setMonthlyContrib}  format={v => `R$ ${Number(v).toLocaleString('pt-BR')}`} />
+          <SliderInput label="Renda mensal desejada na aposentadoria" id="income" min={1000} max={30000} step={500} value={retirementIncome} onChange={setRetirementIncome} format={v => `R$ ${Number(v).toLocaleString('pt-BR')}`} />
 
           <div className="rounded-xl border border-dashed border-gray-200 p-4 space-y-4 dark:border-gray-700">
-            <Slider label="Retorno na acumulação" id="rate"  min={4} max={25} step={0.5} value={annualRate}      onChange={setAnnualRate}      format={v => `${v}% a.a.`} hint="Fase de crescimento do patrimônio" />
-            <Slider label="Retorno na aposentadoria" id="rrate" min={3} max={15} step={0.5} value={retirementRate} onChange={setRetirementRate} format={v => `${v}% a.a.`} hint="Fase conservadora de retirada" />
+            <SliderInput label="Retorno na acumulação" id="rate"  min={4} max={25} step={0.5} value={annualRate}      onChange={setAnnualRate}      format={v => `${v}% a.a.`} hint="Fase de crescimento do patrimônio" />
+            <SliderInput label="Retorno na aposentadoria" id="rrate" min={3} max={15} step={0.5} value={retirementRate} onChange={setRetirementRate} format={v => `${v}% a.a.`} hint="Fase conservadora de retirada" />
           </div>
         </div>
 

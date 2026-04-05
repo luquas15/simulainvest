@@ -7,39 +7,10 @@ import { formatCurrency } from '../utils/finance';
 import { useMarketData } from '../context/MarketDataContext';
 import AdUnit, { AD_SLOTS } from '../components/AdUnit';
 import { usePageTitle } from '../hooks/usePageTitle';
+import SliderInput from '../components/SliderInput';
 
 const annualToMonthlyRate = (annual) => Math.pow(1 + annual / 100, 1 / 12) - 1;
 
-function Slider({ label, id, min, max, step, value, onChange, format, hint, badge }) {
-  return (
-    <div>
-      <div className="mb-1 flex justify-between items-center">
-        <label htmlFor={id} className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
-          {label}
-          {badge && (
-            <span className="rounded-full bg-green-100 px-2 py-0.5 text-xs font-semibold text-green-700 dark:bg-green-900/40 dark:text-green-400">
-              ao vivo
-            </span>
-          )}
-        </label>
-        <span className="rounded-md bg-brand/10 px-2 py-0.5 text-sm font-semibold text-brand">
-          {format(value)}
-        </span>
-      </div>
-      <input
-        id={id}
-        type="range"
-        min={min}
-        max={max}
-        step={step}
-        value={value}
-        onChange={e => onChange(Number(e.target.value))}
-        className="h-2 w-full cursor-pointer appearance-none rounded-full bg-gray-200 accent-brand dark:bg-gray-700"
-      />
-      {hint && <p className="mt-0.5 text-xs text-gray-400">{hint}</p>}
-    </div>
-  );
-}
 
 const BRL = v => `R$ ${Number(v).toLocaleString('pt-BR')}`;
 const PCT = v => `${v}% a.a.`;
@@ -172,26 +143,26 @@ export default function CalculadoraAluguelCompra() {
           <div>
             <p className="mb-3 text-xs font-bold uppercase tracking-widest text-gray-400">O Imóvel</p>
             <div className="space-y-4">
-              <Slider
+              <SliderInput
                 label="Valor do imóvel" id="imovelValor"
                 min={100000} max={3000000} step={10000}
                 value={imovelValor} onChange={setImovelValor}
                 format={BRL}
               />
-              <Slider
+              <SliderInput
                 label="Entrada" id="entrada"
                 min={5} max={50} step={5}
                 value={entrada} onChange={setEntrada}
                 format={v => `${v}%`}
                 hint={`Entrada: ${BRL(calc.entradaValor)}`}
               />
-              <Slider
+              <SliderInput
                 label="Taxa de financiamento" id="taxaFinanciamento"
                 min={5} max={20} step={0.5}
                 value={taxaFinanciamento} onChange={setTaxaFinanciamento}
                 format={PCT}
               />
-              <Slider
+              <SliderInput
                 label="Prazo do financiamento" id="prazoFinanciamento"
                 min={5} max={35} step={5}
                 value={prazoFinanciamento} onChange={setPrazoFinanciamento}
@@ -206,13 +177,13 @@ export default function CalculadoraAluguelCompra() {
           <div>
             <p className="mb-3 text-xs font-bold uppercase tracking-widest text-gray-400">Custos mensais</p>
             <div className="space-y-4">
-              <Slider
+              <SliderInput
                 label="Aluguel atual" id="aluguel"
                 min={500} max={20000} step={500}
                 value={aluguel} onChange={setAluguel}
                 format={BRL}
               />
-              <Slider
+              <SliderInput
                 label="Valorização do imóvel" id="valorizacaoImovel"
                 min={0} max={15} step={0.5}
                 value={valorizacaoImovel} onChange={setValorizacaoImovel}
@@ -226,7 +197,7 @@ export default function CalculadoraAluguelCompra() {
           {/* Rendimento alternativo */}
           <div>
             <p className="mb-3 text-xs font-bold uppercase tracking-widest text-gray-400">Rendimento alternativo</p>
-            <Slider
+            <SliderInput
               label="CDI (rendimento da entrada)" id="rendimentoAlternativo"
               min={5} max={20} step={0.25}
               value={rendimentoAlternativo} onChange={setRendimentoAlternativo}

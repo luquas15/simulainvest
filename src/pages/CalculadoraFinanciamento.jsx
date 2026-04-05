@@ -7,22 +7,8 @@ import { compareSystems, calcMaxLoan } from '../utils/loan';
 import { annualToMonthlyRate, formatCurrency } from '../utils/finance';
 import AdUnit, { AD_SLOTS } from '../components/AdUnit';
 import { usePageTitle } from '../hooks/usePageTitle';
+import SliderInput from '../components/SliderInput';
 
-function Slider({ label, id, min, max, step, value, onChange, format, hint }) {
-  return (
-    <div>
-      <div className="mb-1 flex justify-between">
-        <label htmlFor={id} className="text-sm font-medium text-gray-700 dark:text-gray-300">{label}</label>
-        <span className="rounded-md bg-brand/10 px-2 py-0.5 text-sm font-semibold text-brand">{format(value)}</span>
-      </div>
-      <input id={id} type="range" min={min} max={max} step={step} value={value}
-        onChange={e => onChange(Number(e.target.value))}
-        className="h-2 w-full cursor-pointer appearance-none rounded-full bg-gray-200 accent-brand dark:bg-gray-700"
-      />
-      {hint && <p className="mt-0.5 text-xs text-gray-400">{hint}</p>}
-    </div>
-  );
-}
 
 const PAGE_SIZE = 12;
 
@@ -79,12 +65,12 @@ export default function CalculadoraFinanciamento() {
       <div className="grid gap-8 lg:grid-cols-[380px_1fr]">
         {/* Formulário */}
         <div className="space-y-5 rounded-2xl border border-gray-100 bg-white p-6 shadow-card dark:border-gray-800 dark:bg-gray-900">
-          <Slider label="Valor do financiamento" id="principal" min={10000} max={2000000} step={5000}
+          <SliderInput label="Valor do financiamento" id="principal" min={10000} max={2000000} step={5000}
             value={principal} onChange={setPrincipal} format={v => `R$ ${Number(v).toLocaleString('pt-BR')}`} />
-          <Slider label="Taxa de juros anual" id="rate" min={1} max={25} step={0.25}
+          <SliderInput label="Taxa de juros anual" id="rate" min={1} max={25} step={0.25}
             value={annualRate} onChange={setAnnualRate} format={v => `${v}% a.a.`}
             hint={`Mensal: ${(monthlyRate * 100).toFixed(3)}%`} />
-          <Slider label="Prazo (meses)" id="periods" min={12} max={420} step={12}
+          <SliderInput label="Prazo (meses)" id="periods" min={12} max={420} step={12}
             value={periods} onChange={setPeriods}
             format={v => `${v}m (${(v/12).toFixed(0)} anos)`} />
 

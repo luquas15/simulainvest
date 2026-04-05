@@ -11,6 +11,7 @@ import {
 import { annualToMonthlyRate, formatCurrency } from '../utils/finance';
 import AdUnit, { AD_SLOTS } from '../components/AdUnit';
 import { usePageTitle } from '../hooks/usePageTitle';
+import SliderInput from '../components/SliderInput';
 
 const PRESETS = [
   { label: '🏖️ Viagem',        value: 15000 },
@@ -20,20 +21,6 @@ const PRESETS = [
   { label: '💰 1 Milhão',      value: 1000000 },
 ];
 
-function Slider({ label, id, min, max, step, value, onChange, format }) {
-  return (
-    <div>
-      <div className="mb-1 flex justify-between">
-        <label htmlFor={id} className="text-sm font-medium text-gray-700 dark:text-gray-300">{label}</label>
-        <span className="rounded-md bg-brand/10 px-2 py-0.5 text-sm font-semibold text-brand">{format(value)}</span>
-      </div>
-      <input id={id} type="range" min={min} max={max} step={step} value={value}
-        onChange={e => onChange(Number(e.target.value))}
-        className="h-2 w-full cursor-pointer appearance-none rounded-full bg-gray-200 accent-brand dark:bg-gray-700"
-      />
-    </div>
-  );
-}
 
 const BRL = v => `R$ ${Number(v).toLocaleString('pt-BR')}`;
 const PCT = v => `${v}%`;
@@ -105,9 +92,9 @@ export default function CalculadoraMetas() {
             </div>
           </div>
 
-          <Slider label="Meta financeira" id="goal"    min={1000}  max={2000000} step={1000}  value={goalValue}      onChange={setGoalValue}      format={BRL} />
-          <Slider label="Já tenho investido" id="init" min={0}     max={500000}  step={500}   value={initialValue}   onChange={setInitialValue}   format={BRL} />
-          <Slider label="Taxa de juros anual" id="rate" min={1}    max={25}      step={0.5}   value={annualRate}     onChange={setAnnualRate}     format={PCT} />
+          <SliderInput label="Meta financeira" id="goal"    min={1000}  max={2000000} step={1000}  value={goalValue}      onChange={setGoalValue}      format={BRL} />
+          <SliderInput label="Já tenho investido" id="init" min={0}     max={500000}  step={500}   value={initialValue}   onChange={setInitialValue}   format={BRL} />
+          <SliderInput label="Taxa de juros anual" id="rate" min={1}    max={25}      step={0.5}   value={annualRate}     onChange={setAnnualRate}     format={PCT} />
 
           {/* Toggle de modo */}
           <div className="rounded-xl border border-dashed border-gray-200 p-4 dark:border-gray-700">
@@ -126,8 +113,8 @@ export default function CalculadoraMetas() {
             </div>
 
             {mode === 'contrib'
-              ? <Slider label="Prazo desejado" id="periods" min={1} max={360} step={1} value={periods} onChange={setPeriods} format={MO} />
-              : <Slider label="Aporte mensal atual" id="contrib" min={0} max={20000} step={100} value={monthlyContrib} onChange={setMonthlyContrib} format={BRL} />
+              ? <SliderInput label="Prazo desejado" id="periods" min={1} max={360} step={1} value={periods} onChange={setPeriods} format={MO} />
+              : <SliderInput label="Aporte mensal atual" id="contrib" min={0} max={20000} step={100} value={monthlyContrib} onChange={setMonthlyContrib} format={BRL} />
             }
           </div>
         </div>

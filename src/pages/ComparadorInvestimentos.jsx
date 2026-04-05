@@ -9,21 +9,8 @@ import {
 } from 'recharts';
 import AdUnit, { AD_SLOTS } from '../components/AdUnit';
 import { usePageTitle } from '../hooks/usePageTitle';
+import SliderInput from '../components/SliderInput';
 
-function Slider({ label, id, min, max, step, value, onChange, format }) {
-  return (
-    <div>
-      <div className="mb-1 flex justify-between">
-        <label htmlFor={id} className="text-sm font-medium text-gray-700 dark:text-gray-300">{label}</label>
-        <span className="rounded-md bg-brand/10 px-2 py-0.5 text-sm font-semibold text-brand">{format(value)}</span>
-      </div>
-      <input id={id} type="range" min={min} max={max} step={step} value={value}
-        onChange={e => onChange(Number(e.target.value))}
-        className="h-2 w-full cursor-pointer appearance-none rounded-full bg-gray-200 accent-brand dark:bg-gray-700"
-      />
-    </div>
-  );
-}
 
 const PERIOD_OPTS = [
   { label: '6 meses',  value: 6 },
@@ -106,7 +93,7 @@ export default function ComparadorInvestimentos() {
 
       {/* Controles */}
       <div className="mb-8 grid gap-6 rounded-2xl border border-gray-100 bg-white p-6 shadow-card dark:border-gray-800 dark:bg-gray-900 sm:grid-cols-3">
-        <Slider label="Capital investido" id="principal" min={1000} max={500000} step={1000} value={principal} onChange={setPrincipal} format={v => `R$ ${Number(v).toLocaleString('pt-BR')}`} />
+        <SliderInput label="Capital investido" id="principal" min={1000} max={500000} step={1000} value={principal} onChange={setPrincipal} format={v => `R$ ${Number(v).toLocaleString('pt-BR')}`} />
         <div>
           <p className="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Prazo</p>
           <div className="flex flex-wrap gap-2">
@@ -131,7 +118,7 @@ export default function ComparadorInvestimentos() {
               </span>
             )}
           </div>
-          <Slider label="" id="cdi" min={5} max={20} step={0.25} value={cdiRate} onChange={setCdiRate} format={v => `${v}% a.a.`} />
+          <SliderInput label="" id="cdi" min={5} max={20} step={0.25} value={cdiRate} onChange={setCdiRate} format={v => `${v}% a.a.`} />
         </div>
       </div>
 
